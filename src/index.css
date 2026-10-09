@@ -1,0 +1,128 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------
+   Oasis Pools design tokens (same values as the Figma variables)
+   ------------------------------------------------------------------ */
+@theme {
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Playfair Display', ui-serif, Georgia, serif;
+
+  --color-navy-900: #061a3a;
+  --color-navy-800: #0a2a5c;
+  --color-ocean-600: #0b5fcb;
+  --color-aqua-400: #1db6ea;
+  --color-aqua-100: #d6f1fb;
+  --color-aqua-50: #eef8fd;
+  --color-gold-500: #d39a17;
+  --color-gold-300: #f3c95b;
+  --color-ink: #0f1b2d;
+  --color-muted: #52627a;
+  --color-line: #e3e9f1;
+  --color-line-strong: #c9d3e0;
+  --color-surface: #f6f9fc;
+
+  --shadow-card: 0 12px 32px -8px rgb(10 42 92 / 0.1);
+  --shadow-lift: 0 24px 48px -12px rgb(10 42 92 / 0.22);
+  --shadow-gold: 0 10px 24px -6px rgb(211 154 23 / 0.5);
+
+  --animate-fade-in: fade-in 0.3s ease-out both;
+  --animate-pop-in: pop-in 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+  --animate-slide-in-right: slide-in-right 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-slide-up: slide-up 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes pop-in {
+    from { opacity: 0; transform: translateY(16px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes slide-in-right {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+  }
+  @keyframes slide-up {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-white font-sans text-ink antialiased;
+  }
+  /* Leave room for the sticky navbar when jumping to a section */
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+  ::selection {
+    @apply bg-aqua-100 text-navy-900;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-[1200px] px-6;
+  }
+  .eyebrow {
+    @apply text-[13px] font-extrabold tracking-[0.16em] uppercase;
+  }
+  .gold-gradient {
+    background-image: linear-gradient(90deg, var(--color-gold-300), var(--color-gold-500));
+  }
+  .ocean-gradient {
+    background-image: linear-gradient(135deg, var(--color-aqua-400), var(--color-ocean-600));
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes hero-zoom {
+  from { transform: scale(1.12); }
+  to { transform: scale(1); }
+}
+
+/* Scroll-reveal animation (see components/Reveal.tsx) */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
