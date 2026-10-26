@@ -1,14 +1,54 @@
-import { business } from '../../data/site'
-import { displayPhone, smsHref, telHref, whatsappHref } from '../../lib/contact'
-import { Icon, type IconName } from '../Icon'
+import type { ReactNode } from 'react'
+import { FaInstagram, FaWhatsapp } from 'react-icons/fa'
+import { business, social } from '../../data/site'
+import { displayPhone, isExternal, mailHref, smsHref, telHref, whatsappHref } from '../../lib/contact'
+import { Icon } from '../Icon'
 import { Reveal } from '../ui/Reveal'
 import { QuoteForm } from './QuoteForm'
 
-const quickActions: { icon: IconName; label: string; href: string }[] = [
-  { icon: 'phone', label: 'Call', href: telHref },
-  { icon: 'message', label: 'Text', href: smsHref },
-  { icon: 'whatsapp', label: 'WhatsApp', href: whatsappHref },
+const quickActions: { icon: ReactNode; label: string; href: string }[] = [
+  { icon: <Icon name="phone" size={18} />, label: 'Call', href: telHref },
+  { icon: <Icon name="message" size={18} />, label: 'Text', href: smsHref },
+  { icon: <FaWhatsapp size={19} aria-hidden="true" />, label: 'WhatsApp', href: whatsappHref },
 ]
+
+const ext = (href: string) => (isExternal(href) ? { target: '_blank', rel: 'noopener noreferrer' } : {})
+
+type InfoRow = { icon: ReactNode; title: string; text: string; href?: string }
+
+const infoRows: InfoRow[] = [
+  { icon: <Icon name="pin" size={20} />, title: 'Service Area', text: business.serviceArea, href: '#service-area' },
+  { icon: <Icon name="truck" size={20} />, title: 'We Come to You', text: 'Mobile service — no storefront needed' },
+  ...(business.email ? [{ icon: <Icon name="mail" size={20} />, title: 'Email', text: business.email, href: mailHref }] : []),
+  ...(social.instagram
+    ? [{ icon: <FaInstagram size={20} aria-hidden="true" />, title: 'Instagram', text: social.instagramHandle, href: social.instagram }]
+    : []),
+]
+
+function Row({ row }: { row: InfoRow }) {
+  const body = (
+    <>
+      <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-white/10 text-gold-300 transition-colors group-hover:bg-gold-300 group-hover:text-navy-900">
+        {row.icon}
+      </span>
+      <span className="min-w-0">
+        <span className="block text-lg font-bold">{row.title}</span>
+        <span className="block truncate text-sm text-white/75">{row.text}</span>
+      </span>
+    </>
+  )
+  return (
+    <li>
+      {row.href ? (
+        <a href={row.href} {...ext(row.href)} className="group flex items-center gap-3.5">
+          {body}
+        </a>
+      ) : (
+        <span className="flex items-center gap-3.5">{body}</span>
+      )}
+    </li>
+  )
+}
 
 export function Contact() {
   return (
@@ -21,7 +61,7 @@ export function Contact() {
             <span className="eyebrow text-gold-300">Contact Us</span>
             <h2 className="font-display text-[32px] leading-[1.15] font-bold md:text-[46px]">Need Pool Service?</h2>
             <p className="text-white/85 md:text-[19px]">
-              Call or text us today for a free estimate. We come to you — anywhere in Colorado.
+              Call, text or WhatsApp us today for a free estimate. We come to you — anywhere in Colorado.
             </p>
 
             <a href={telHref} className="group w-fit">
@@ -36,10 +76,14 @@ export function Contact() {
                 <a
                   key={a.label}
                   href={a.href}
-                  {...(a.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                  className="flex flex-col items-center justify-center gap-1.5 rounded-[14px] border border-white/25 bg-white/10 py-3.5 text-sm font-semibold transition-all hover:-translate-y-0.5 hover:border-gold-300 hover:bg-white/15 md:flex-row md:gap-2 md:text-[15px]"
+                  {...ext(a.href)}
+                  className={`flex flex-col items-center justify-center gap-1.5 rounded-[14px] border py-3.5 text-sm font-semibold transition-all hover:-translate-y-0.5 md:flex-row md:gap-2 md:text-[15px] ${
+                    a.label === 'WhatsApp'
+                      ? 'border-transparent bg-[#25D366] text-white hover:bg-[#1ebe5a]'
+                      : 'border-white/25 bg-white/10 hover:border-gold-300 hover:bg-white/15 [&>svg]:text-gold-300'
+                  }`}
                 >
-                  <Icon name={a.icon} size={18} className="text-gold-300" />
+                  {a.icon}
                   {a.label}
                 </a>
               ))}
@@ -48,21 +92,8 @@ export function Contact() {
             <hr className="border-white/15" />
 
             <ul className="flex flex-col gap-4">
-              {(
-                [
-                  ['pin', 'Service Area', business.serviceArea],
-                  ['truck', 'We Come to You', 'Mobile service — no storefront needed'],
-                ] as const
-              ).map(([icon, title, text]) => (
-                <li key={title} className="flex items-center gap-3.5">
-                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-white/10 text-gold-300">
-                    <Icon name={icon} size={20} />
-                  </span>
-                  <span>
-                    <span className="block text-lg font-bold">{title}</span>
-                    <span className="block text-sm text-white/75">{text}</span>
-                  </span>
-                </li>
+              {infoRows.map((row) => (
+                <Row key={row.title} row={row} />
               ))}
             </ul>
 

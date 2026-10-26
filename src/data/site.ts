@@ -3,8 +3,7 @@
  * (phone, email, prices, photos) are a one-file change.
  *
  * TODO (pending from client):
- *  - phone / WhatsApp number and email
- *  - plan prices
+ *  - Facebook page link (fill in social.facebook)
  *  - real before & after photos
  */
 import type { IconName } from '../components/Icon'
@@ -23,18 +22,30 @@ export const business = {
   name: 'Oasis Pools',
   legalName: 'Oasis Pools LLC',
   tagline: 'Excellence in Every Drop',
-  /** Digits only, US format. Leave empty until the client confirms it. */
-  phone: '',
-  /** WhatsApp number in international format without "+" (e.g. 17205550123). Empty = use phone. */
-  whatsapp: '',
-  email: '',
+  /** US phone, any format. */
+  phone: '(720) 331-8723',
+  /** WhatsApp number in international format without "+". Empty = use phone. */
+  whatsapp: '17203318723',
+  email: 'oasispools97@gmail.com',
   serviceArea: 'Aurora, Denver & all of Colorado',
   payments: ['Cash', 'Zelle', 'Bank Transfer', 'Check'],
+}
+
+/** Social profiles. Leave a link empty to hide its icon everywhere. */
+export const social = {
+  instagram: 'https://www.instagram.com/oasis_pools1/',
+  instagramHandle: '@oasis_pools1',
+  facebook: '', // pending from client
 }
 
 export const images = {
   hero: heroImg,
   equipment: equipmentWallImg,
+  /**
+   * Optional real video for the hero (e.g. '/hero-water.mp4' placed in /public).
+   * Empty = animated water effect drawn in the browser (no video file needed).
+   */
+  heroVideo: '',
 }
 
 export type NavLink = { id: string; label: string }
@@ -43,6 +54,7 @@ export const navLinks: NavLink[] = [
   { id: 'services', label: 'Services' },
   { id: 'plans', label: 'Plans' },
   { id: 'our-work', label: 'Our Work' },
+  { id: 'service-area', label: 'Service Area' },
   { id: 'about', label: 'About' },
   { id: 'contact', label: 'Contact' },
 ]
@@ -58,7 +70,10 @@ export const trustItems: { icon: IconName; title: string; text: string }[] = [
 export const quoteOptions = [
   'Free Pool Health Check',
   'Weekly / Biweekly / Monthly Maintenance',
-  'Repair (pump, filter, plumbing, leak…)',
+  'Repair (pump, filter, skimmer, plumbing…)',
+  'Leak Detection',
+  'Heater Repair or Installation',
+  'Gas Line Work',
   'Pool Opening or Closing',
   'Green Pool / Algae Removal',
   'Acid Washing',
@@ -94,16 +109,29 @@ export const services: Service[] = [
   },
   {
     icon: 'wrench',
-    title: 'Repairs',
-    subtitle: 'Fast, reliable fixes for your equipment',
-    quoteOption: 'Repair (pump, filter, plumbing, leak…)',
+    title: 'Repairs & Leak Detection',
+    subtitle: 'Fast, reliable fixes that last',
+    quoteOption: 'Repair (pump, filter, skimmer, plumbing…)',
     items: [
       'Pump Repair & Replacement',
       'Filter Repair & Replacement',
-      'Plumbing, Pipes & Valves',
-      'Leak Detection',
-      'Equipment Troubleshooting',
+      'Skimmer Repair & Replacement',
+      'Pool Plumbing & Pipe Repairs',
+      'Leak Detection & Repair',
+      'Skimmer Leak Detection',
+    ],
+  },
+  {
+    icon: 'flame',
+    title: 'Equipment & Installations',
+    subtitle: 'Heaters, gas lines, lights & more',
+    quoteOption: 'Heater Repair or Installation',
+    items: [
+      'Pool & Spa Heater Repair & Installation',
+      'Gas Line Installation & Repair',
       'Pool Lights & Electrical',
+      'Salt System Maintenance',
+      'Equipment Troubleshooting',
     ],
   },
   {
@@ -118,7 +146,6 @@ export const services: Service[] = [
       'Deep & Post-Storm Cleaning',
       'Acid Washing',
       'Deck Sealing (Deck-O-Seal)',
-      'Salt System Maintenance',
     ],
   },
   {
@@ -129,7 +156,6 @@ export const services: Service[] = [
     items: ['Spa & Hot Tub Cleaning', 'Chemical Maintenance', 'Filter Service', 'Equipment Inspection'],
   },
 ]
-
 
 export const healthCheckItems = [
   'Water chemistry & balance test',
@@ -151,8 +177,6 @@ export type Plan = {
   name: string
   description: string
   featured?: boolean
-  /** Price per visit for each frequency. `null` = not confirmed yet (shows $XX). */
-  price: Record<Frequency, number | null>
   features: string[]
 }
 
@@ -160,7 +184,6 @@ export const plans: Plan[] = [
   {
     name: 'Basic',
     description: 'Essential chemistry & surface care',
-    price: { weekly: null, biweekly: null, monthly: null },
     features: [
       'Water testing & chemical balancing',
       'Skimming surface debris',
@@ -172,7 +195,6 @@ export const plans: Plan[] = [
     name: 'Complete',
     description: 'Full-service cleaning, visit after visit',
     featured: true,
-    price: { weekly: null, biweekly: null, monthly: null },
     features: [
       'Everything in Basic',
       'Brushing walls, steps & tile line',
@@ -184,7 +206,6 @@ export const plans: Plan[] = [
   {
     name: 'Premium',
     description: 'Hands-off, total pool care',
-    price: { weekly: null, biweekly: null, monthly: null },
     features: [
       'Everything in Complete',
       'Filter cleaning included',
@@ -195,16 +216,64 @@ export const plans: Plan[] = [
   },
 ]
 
-export type GalleryItem = { src: string; caption: string; alt: string }
+export type GalleryItem = {
+  src: string
+  caption: string
+  alt: string
+  /** Spans two columns on large screens. */
+  wide?: boolean
+}
 
 export const gallery: GalleryItem[] = [
-  { src: infinityImg, caption: 'Infinity Pool Care', alt: 'Modern infinity-edge pool with clear water' },
+  { src: infinityImg, caption: 'Infinity Pool Care', alt: 'Modern infinity-edge pool with clear water', wide: true },
   { src: fountainImg, caption: 'Water Features', alt: 'Pool with arching deck jet fountains' },
   { src: poolSpaImg, caption: 'Pool & Spa Service', alt: 'Freeform pool and attached spa with flagstone deck' },
   { src: spaImg, caption: 'Spa Cleaning', alt: 'Crystal-clear spa with jets running' },
   { src: kidneyImg, caption: 'Weekly Maintenance', alt: 'Kidney-shaped pool with brick coping' },
   { src: tiledImg, caption: 'Tile & Waterline', alt: 'Freshly cleaned pool with blue waterline tile' },
+  { src: heroImg, caption: 'Rock Waterfall Pool', alt: 'Pool with natural rock waterfall, slide and attached spa' },
   { src: equipmentPumpsImg, caption: 'Equipment Installs', alt: 'New pool pumps, filter and plumbing installed' },
+]
+
+/** Cities shown on the Service Area map. x/y are computed from lat/lng in ServiceArea.tsx. */
+export type MapCity = {
+  name: string
+  lat: number
+  lng: number
+  base?: boolean
+  label?: 'left' | 'right' | 'top' | 'bottom'
+  /** Label hidden on phones to avoid crowding (the dot stays). */
+  minor?: boolean
+}
+
+export const mapCities: MapCity[] = [
+  { name: 'Denver', lat: 39.7392, lng: -104.9903, base: true, label: 'left' },
+  { name: 'Aurora', lat: 39.7294, lng: -104.8319, base: true, label: 'right' },
+  { name: 'Boulder', lat: 40.015, lng: -105.2705, label: 'left' },
+  { name: 'Fort Collins', lat: 40.5853, lng: -105.0844, label: 'left' },
+  { name: 'Greeley', lat: 40.4233, lng: -104.7091, label: 'right', minor: true },
+  { name: 'Castle Rock', lat: 39.3722, lng: -104.8561, label: 'right', minor: true },
+  { name: 'Colorado Springs', lat: 38.8339, lng: -104.8214, label: 'right' },
+  { name: 'Pueblo', lat: 38.2544, lng: -104.6091, label: 'right' },
+  { name: 'Vail', lat: 39.6403, lng: -106.3742, label: 'bottom' },
+  { name: 'Grand Junction', lat: 39.0639, lng: -108.5506, label: 'right' },
+  { name: 'Durango', lat: 37.2753, lng: -107.8801, label: 'top' },
+]
+
+/** Areas listed next to the map (helps local search). */
+export const serviceAreas = [
+  'Aurora',
+  'Denver',
+  'Centennial',
+  'Parker',
+  'Littleton',
+  'Highlands Ranch',
+  'Lakewood',
+  'Arvada',
+  'Castle Rock',
+  'Boulder',
+  'Colorado Springs',
+  'Fort Collins',
 ]
 
 export type BeforeAfterPair = { before: string; after: string; label: string }

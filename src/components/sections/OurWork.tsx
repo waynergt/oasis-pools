@@ -6,8 +6,7 @@ import { Reveal } from '../ui/Reveal'
 import { SectionHeader } from '../ui/SectionHeader'
 import { BeforeAfter } from './BeforeAfter'
 
-/** Bento layout on large screens: first and last photos span two columns. */
-const span = (i: number) => (i === 0 || i === gallery.length - 1 ? 'lg:col-span-2' : '')
+
 
 function Lightbox({ index, onClose, onMove }: { index: number | null; onClose: () => void; onMove: (d: number) => void }) {
   useEffect(() => {
@@ -90,7 +89,7 @@ export function OurWork() {
             <Reveal
               key={item.src}
               delay={(i % 3) * 90}
-              className={`${span(i)} ${i >= 4 && !showAll ? 'max-md:hidden' : ''}`}
+              className={`${item.wide ? 'lg:col-span-2' : ''} ${i >= 4 && !showAll ? 'max-md:hidden' : ''}`}
             >
               <button
                 type="button"

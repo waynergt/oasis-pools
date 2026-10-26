@@ -6,6 +6,7 @@ import { useLockBodyScroll } from '../../hooks/useLockBodyScroll'
 import { Icon } from '../Icon'
 import { Logo } from '../Logo'
 import { ButtonLink } from '../ui/Button'
+import { SocialLinks } from '../ui/SocialLinks'
 
 const links = [
   ...navLinks.filter((l) => l.id !== 'about' && l.id !== 'contact'),
@@ -34,7 +35,7 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
 
       <div
         id="mobile-menu"
-        className="absolute inset-y-0 right-0 flex w-full max-w-[420px] animate-slide-in-right flex-col gap-7 overflow-y-auto bg-navy-900 px-6 pt-3.5 pb-10"
+        className="absolute inset-y-0 right-0 flex w-full max-w-[420px] animate-slide-in-right flex-col gap-6 overflow-y-auto bg-navy-900 px-6 pt-3.5 pb-10"
       >
         <div className="flex items-center justify-between">
           <a href="#top" onClick={onClose} className="rounded-xl bg-white px-3 py-1.5">
@@ -57,7 +58,7 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
               <a
                 href={`#${link.id}`}
                 onClick={onClose}
-                className="flex items-center justify-between border-b border-white/10 py-4 font-display text-[28px] font-semibold text-white transition-colors hover:text-gold-300"
+                className="flex items-center justify-between border-b border-white/10 py-3.5 font-display text-[26px] font-semibold text-white transition-colors hover:text-gold-300"
               >
                 {link.label}
                 <Icon name="chevronRight" size={22} className="text-gold-300" />
@@ -74,7 +75,10 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
           <ButtonLink href="#quote" onClick={onClose} full>
             Get a Free Quote
           </ButtonLink>
-          <p className="text-sm text-white/60">{business.payments.join(' · ')}</p>
+          <div className="flex items-center justify-between gap-4">
+            <SocialLinks />
+            <p className="text-right text-sm text-white/60">{business.payments.join(' · ')}</p>
+          </div>
         </div>
       </div>
     </div>,

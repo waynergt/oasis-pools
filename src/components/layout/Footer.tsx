@@ -1,11 +1,13 @@
-import { business, services } from '../../data/site'
-import { displayPhone, telHref } from '../../lib/contact'
+import { business, services, social } from '../../data/site'
+import { displayPhone, mailHref, telHref, whatsappHref } from '../../lib/contact'
 import { Logo } from '../Logo'
+import { SocialLinks } from '../ui/SocialLinks'
 
 const company = [
   { label: 'About Us', href: '#about' },
   { label: 'Our Work', href: '#our-work' },
   { label: 'Maintenance Plans', href: '#plans' },
+  { label: 'Service Area', href: '#service-area' },
   { label: 'Free Pool Health Check', href: '#services' },
 ]
 
@@ -15,7 +17,7 @@ export function Footer() {
   return (
     <footer className="bg-navy-900 pt-16 pb-28 text-white md:pt-20 md:pb-8">
       <div className="container-page flex flex-col gap-12 md:gap-14">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[380px_1fr_1fr_1fr] lg:gap-16">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[360px_1fr_1fr_1.15fr] lg:gap-14">
           <div className="flex flex-col items-start gap-5">
             <a href="#top" className="rounded-2xl bg-white px-4 py-3 transition-transform hover:scale-[1.03]">
               <Logo className="h-16" />
@@ -24,6 +26,7 @@ export function Footer() {
             <p className="text-white/70">
               Professional pool cleaning, maintenance and repairs for homes across Colorado.
             </p>
+            <SocialLinks />
           </div>
 
           <nav aria-label="Services">
@@ -57,18 +60,28 @@ export function Footer() {
             <ul className="flex flex-col gap-3.5">
               <li>
                 <a href={telHref} className={linkClass}>
-                  {displayPhone()}
+                  Call or text {displayPhone()}
                 </a>
               </li>
               <li>
-                {business.email ? (
-                  <a href={`mailto:${business.email}`} className={linkClass}>
+                <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                  WhatsApp {displayPhone()}
+                </a>
+              </li>
+              {business.email && (
+                <li>
+                  <a href={mailHref} className={`${linkClass} break-all`}>
                     {business.email}
                   </a>
-                ) : (
-                  <span className="text-white/70">Email — coming soon</span>
-                )}
-              </li>
+                </li>
+              )}
+              {social.instagram && (
+                <li>
+                  <a href={social.instagram} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                    Instagram {social.instagramHandle}
+                  </a>
+                </li>
+              )}
               <li className="text-white/70">Serving all of Colorado</li>
             </ul>
           </div>

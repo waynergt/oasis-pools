@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { frequencies, plans, type Frequency, type Plan } from '../../data/site'
 import { prefillQuote } from '../../lib/quoteEvents'
+import { Icon } from '../Icon'
 import { ButtonLink } from '../ui/Button'
 import { CheckItem } from '../ui/CheckItem'
 import { Reveal } from '../ui/Reveal'
@@ -43,7 +44,6 @@ function FrequencyToggle({ value, onChange }: { value: Frequency; onChange: (f: 
 
 function PlanCard({ plan, frequency }: { plan: Plan; frequency: Frequency }) {
   const dark = !!plan.featured
-  const price = plan.price[frequency]
   const freqLabel = frequencies.find((f) => f.id === frequency)!.label
 
   return (
@@ -59,7 +59,7 @@ function PlanCard({ plan, frequency }: { plan: Plan; frequency: Frequency }) {
           {plan.name}
         </h3>
         {dark && (
-          <span className="gold-gradient rounded-full px-3 py-1.5 text-[11px] font-extrabold tracking-[0.14em] text-navy-900 uppercase">
+          <span className="gold-gradient shrink-0 whitespace-nowrap rounded-full px-3 py-1.5 text-[11px] font-extrabold tracking-[0.14em] text-navy-900 uppercase">
             Most Popular
           </span>
         )}
@@ -67,17 +67,26 @@ function PlanCard({ plan, frequency }: { plan: Plan; frequency: Frequency }) {
 
       <p className={dark ? 'text-white/80' : 'text-muted'}>{plan.description}</p>
 
-      <div className="flex items-baseline gap-2">
+      {/* No fixed price: every pool is different, so each plan is quoted for free */}
+      <div className="flex flex-wrap items-center gap-2">
+        <span
+          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-semibold ${
+            dark ? 'bg-gold-300/15 text-gold-300' : 'bg-aqua-50 text-ocean-600'
+          }`}
+        >
+          <Icon name="tag" size={15} />
+          Free custom quote
+        </span>
         {/* key forces a small re-animation when the frequency changes */}
         <span
           key={frequency}
-          className={`animate-pop-in font-display text-5xl leading-none font-bold tracking-tight ${
-            dark ? 'text-gold-300' : 'text-navy-800'
+          className={`inline-flex animate-pop-in items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-semibold ${
+            dark ? 'bg-white/10 text-white' : 'bg-surface text-navy-800'
           }`}
         >
-          {price === null ? '$XX' : `$${price}`}
+          <Icon name="calendar" size={15} />
+          {freqLabel} visits
         </span>
-        <span className={dark ? 'text-white/80' : 'text-muted'}>/ visit · {freqLabel.toLowerCase()}</span>
       </div>
 
       <hr className={dark ? 'border-white/15' : 'border-line'} />
@@ -150,7 +159,7 @@ export function Plans() {
         <SectionHeader
           eyebrow="Maintenance Plans"
           title="Choose the Care Your Pool Needs"
-          text="Pick the level of care and the visit frequency that fits your pool. Not sure where to start? Book a free Pool Health Check."
+          text="Pick the level of care and the visit frequency that fits your pool. Not sure which one? Book a free Pool Health Check and we’ll recommend the right plan."
         />
 
         <Reveal className="flex w-full justify-center">
@@ -190,7 +199,7 @@ export function Plans() {
         </div>
 
         <p className="text-center text-sm font-medium text-muted">
-          Pricing depends on pool size and condition — your final price is confirmed with a free estimate.
+          Pricing depends on pool size, condition and visit frequency — we’ll give you a clear price with your free estimate.
         </p>
       </div>
     </section>

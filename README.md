@@ -26,11 +26,17 @@ Other scripts:
 
 Almost everything the client may ask to change lives in **`src/data/site.ts`**:
 
-- `business.phone`, `business.whatsapp`, `business.email` — once filled in, every Call / Text / WhatsApp
-  button, the navbar, contact card, footer and Google structured data update automatically.
-- `plans[].price` — prices per visit for weekly / biweekly / monthly (`null` shows `$XX`).
+- `business.phone`, `business.whatsapp`, `business.email` — every Call / Text / WhatsApp / Email button,
+  the navbar, contact card, footer and Google structured data read from here.
+- `social.instagram`, `social.facebook` — social icons (top bar, footer, menu, contact). An empty link hides
+  its icon, so Facebook appears automatically once its URL is added.
+- `plans` — plan names and what each includes (no prices on purpose: every plan is quoted for free).
 - `services`, `reasons`, `values`, `healthCheckItems` — page copy.
-- `gallery` — photos for **Our Work** (files in `src/assets/img/`).
+- `gallery` — photos for **Our Work** (files in `src/assets/img/`). `wide: true` makes a photo span two columns.
+- `mapCities`, `serviceAreas` — pins on the Colorado map and the city chips next to it.
+- `images.heroVideo` — optional. The hero shows animated pool water drawn in the browser (WebGL, no file
+  needed). To use a real video instead, put e.g. `hero-water.mp4` in `public/` and set
+  `heroVideo: '/hero-water.mp4'`. If a browser can't run WebGL, the hero photo is shown instead.
 - `beforeAfter` — add `{ before, after, label }` pairs when the client sends photos. While empty, the
   Before & After block only shows in `npm run dev` and is hidden in the production build.
 
@@ -58,15 +64,19 @@ src/
   hooks/                  ← active section, scroll state, body scroll lock
   components/
     layout/               ← TopBar, Navbar, MobileMenu, Footer, StickyCTA
+    layout/WhatsAppButton ← floating WhatsApp bubble (tablet/desktop)
     sections/             ← Hero, Services (+HealthCheck), Plans, OurWork (+BeforeAfter),
-                            WhyChooseUs, About, Contact (+QuoteForm)
-    ui/                   ← Button, Reveal (scroll animation), Modal, SectionHeader, CheckItem
+                            WhyChooseUs, About, ServiceArea (Colorado map), Contact (+QuoteForm)
+    ui/                   ← Button, Reveal (scroll animation), Modal, SectionHeader, CheckItem,
+                            SocialLinks, PoolWater (animated hero water)
 ```
 
 ## Pending from the client
 
-- [ ] Phone / WhatsApp number and email
-- [ ] Plan prices
+- [x] Phone / WhatsApp number and email
+- [x] Instagram
+- [ ] Facebook page link
+- [ ] Quote form endpoint (`VITE_FORM_ENDPOINT` in Vercel → redeploy)
 - [ ] Real before & after photos
 - [ ] Confirm the Pool Health Check is free and the content of each plan
 - [ ] Domain / hosting (the `dist/` folder deploys as-is to Netlify, Vercel, Cloudflare Pages…)

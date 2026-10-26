@@ -1,20 +1,61 @@
+import { useState } from 'react'
 import { business, images, trustItems } from '../../data/site'
 import { telHref } from '../../lib/contact'
 import { Icon } from '../Icon'
 import { ButtonLink } from '../ui/Button'
+import { PoolWater, WaterBoundary } from '../ui/PoolWater'
+
+/**
+ * Hero background, in order of preference:
+ *  1. a real video, if `images.heroVideo` is set
+ *  2. animated pool water drawn in the browser (WebGL)
+ *  3. the hero photo (old browsers / WebGL unavailable)
+ */
+function HeroBackground() {
+  const [waterFailed, setWaterFailed] = useState(false)
+  const base = 'absolute inset-0 -z-20 size-full'
+
+  if (images.heroVideo) {
+    return (
+      <video
+        className={`${base} object-cover`}
+        src={images.heroVideo}
+        poster={images.hero}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        aria-hidden="true"
+      />
+    )
+  }
+
+  const photo = (
+    <img
+      src={images.hero}
+      alt=""
+      className={`${base} origin-center animate-[hero-zoom_18s_ease-out_both] object-cover object-[60%_center]`}
+    />
+  )
+  if (waterFailed) return photo
+
+  return (
+    <WaterBoundary fallback={photo}>
+      <PoolWater
+        onFail={() => setWaterFailed(true)}
+        className={`${base} block animate-fade-in bg-[linear-gradient(160deg,#0a6fb5,#05305f)] [animation-duration:1.2s]`}
+      />
+    </WaterBoundary>
+  )
+}
 
 export function Hero() {
   return (
     <section aria-label="Introduction" className="relative isolate overflow-hidden bg-navy-900 text-white">
-      {/* Background photo with a slow zoom */}
-      <img
-        src={images.hero}
-        alt=""
-        fetchPriority="high"
-        className="absolute inset-0 -z-20 size-full origin-center animate-[hero-zoom_18s_ease-out_both] object-cover object-[60%_center]"
-      />
+      <HeroBackground />
       {/* Readability overlays (same as the mockup) */}
-      <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(6_26_58/0.94)_0%,rgb(6_26_58/0.62)_55%,rgb(6_26_58/0.08)_100%)] max-md:bg-[linear-gradient(180deg,rgb(6_26_58/0.6)_0%,rgb(6_26_58/0.92)_100%)]" />
+      <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(6_26_58/0.9)_0%,rgb(6_26_58/0.55)_50%,rgb(6_26_58/0)_100%)] max-md:bg-[linear-gradient(180deg,rgb(6_26_58/0.5)_0%,rgb(6_26_58/0.62)_45%,rgb(6_26_58/0.9)_100%)]" />
       <div className="absolute inset-x-0 bottom-0 -z-10 h-2/5 bg-gradient-to-t from-navy-900/75 to-transparent" />
 
       <div className="container-page flex min-h-[calc(100svh-81px)] flex-col justify-between gap-10 pt-14 pb-8 md:min-h-[690px] md:pt-28 md:pb-12">

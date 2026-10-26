@@ -1,12 +1,14 @@
 import { Footer } from './components/layout/Footer'
 import { Navbar } from './components/layout/Navbar'
 import { StickyCTA } from './components/layout/StickyCTA'
+import { WhatsAppButton } from './components/layout/WhatsAppButton'
 import { TopBar } from './components/layout/TopBar'
 import { About } from './components/sections/About'
 import { Contact } from './components/sections/Contact'
 import { Hero } from './components/sections/Hero'
 import { OurWork } from './components/sections/OurWork'
 import { Plans } from './components/sections/Plans'
+import { ServiceArea } from './components/sections/ServiceArea'
 import { Services } from './components/sections/Services'
 import { WhyChooseUs } from './components/sections/WhyChooseUs'
 import { StructuredData } from './components/StructuredData'
@@ -30,10 +32,12 @@ export default function App() {
         <OurWork />
         <WhyChooseUs />
         <About />
+        <ServiceArea />
         <Contact />
       </main>
       <Footer />
       <StickyCTA />
+      <WhatsAppButton />
       <StructuredData />
     </>
   )

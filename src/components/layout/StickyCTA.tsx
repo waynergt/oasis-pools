@@ -1,11 +1,13 @@
-import { telHref } from '../../lib/contact'
+import { FaWhatsapp } from 'react-icons/fa'
+import { telHref, whatsappHref } from '../../lib/contact'
 import { useScrolled } from '../../hooks/useScrolled'
 import { Icon } from '../Icon'
 import { ButtonLink } from '../ui/Button'
 
-/** Fixed "Call / Free Quote" bar on phones. Slides in after the visitor starts scrolling. */
+/** Fixed "Call / WhatsApp / Free Quote" bar on phones. Slides in after the visitor starts scrolling. */
 export function StickyCTA() {
   const show = useScrolled(420)
+  const tab = show ? 0 : -1
 
   return (
     <div
@@ -13,11 +15,23 @@ export function StickyCTA() {
         show ? 'translate-y-0' : 'translate-y-full'
       }`}
     >
-      <ButtonLink href={telHref} variant="navy" size="sm" arrow={false} full tabIndex={show ? 0 : -1}>
+      <ButtonLink href={telHref} variant="navy" size="sm" arrow={false} full tabIndex={tab}>
         <Icon name="phone" size={18} />
         Call
       </ButtonLink>
-      <ButtonLink href="#quote" size="sm" arrow={false} full tabIndex={show ? 0 : -1}>
+      {whatsappHref !== '#contact' && (
+        <a
+          href={whatsappHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="WhatsApp"
+          tabIndex={tab}
+          className="grid aspect-square shrink-0 place-items-center rounded-full bg-[#25D366] px-3 text-white transition-transform active:scale-95"
+        >
+          <FaWhatsapp size={24} aria-hidden="true" />
+        </a>
+      )}
+      <ButtonLink href="#quote" size="sm" arrow={false} full tabIndex={tab}>
         Free Quote
       </ButtonLink>
     </div>

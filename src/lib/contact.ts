@@ -19,8 +19,10 @@ export const smsHref = hasPhone ? `sms:+1${digits(business.phone).slice(-10)}` :
 export const whatsappHref = (() => {
   const wa = digits(business.whatsapp) || (hasPhone ? `1${digits(business.phone).slice(-10)}` : '')
   if (!wa) return '#contact'
-  const text = encodeURIComponent('Hi Oasis Pools! I would like a free estimate for my pool.')
+  const text = encodeURIComponent("Hi Oasis Pools! I'd like a free estimate for my pool.")
   return `https://wa.me/${wa}?text=${text}`
 })()
+
+export const mailHref = business.email ? `mailto:${business.email}` : '#contact'
 
 export const isExternal = (href: string) => href.startsWith('http')

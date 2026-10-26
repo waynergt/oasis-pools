@@ -35,7 +35,7 @@ export function Navbar() {
             />
           </a>
 
-          <ul className="hidden items-center gap-9 lg:flex">
+          <ul className="hidden items-center gap-7 lg:flex xl:gap-9">
             {navLinks.map((link) => (
               <li key={link.id}>
                 <a

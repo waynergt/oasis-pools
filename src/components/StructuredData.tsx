@@ -1,4 +1,4 @@
-import { business, services } from '../data/site'
+import { business, services, social } from '../data/site'
 import { hasPhone } from '../lib/contact'
 
 /** LocalBusiness schema so Google understands the service area and offer. */
@@ -19,6 +19,7 @@ export function StructuredData() {
     paymentAccepted: business.payments.join(', '),
     ...(hasPhone ? { telephone: `+1${business.phone.replace(/\D/g, '').slice(-10)}` } : {}),
     ...(business.email ? { email: business.email } : {}),
+    sameAs: [social.instagram, social.facebook].filter(Boolean),
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: 'Pool services',

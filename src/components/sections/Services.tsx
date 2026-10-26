@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import { services, type Service } from '../../data/site'
+import { FaWhatsapp } from 'react-icons/fa'
+import { displayPhone, telHref, whatsappHref } from '../../lib/contact'
 import { prefillQuote } from '../../lib/quoteEvents'
 import { Icon } from '../Icon'
+import { ButtonLink } from '../ui/Button'
 import { CheckItem } from '../ui/CheckItem'
 import { Reveal } from '../ui/Reveal'
 import { SectionHeader } from '../ui/SectionHeader'
@@ -43,6 +46,42 @@ function ServiceCard({ service }: { service: Service }) {
         Get a quote
         <Icon name="arrowRight" size={16} strokeWidth={2.4} className="transition-transform group-hover:translate-x-1" />
       </a>
+    </article>
+  )
+}
+
+/** Sixth tile of the grid: catches visitors who don't see their exact problem listed. */
+function HelpCard() {
+  return (
+    <article className="relative isolate flex h-full flex-col gap-5 overflow-hidden rounded-[20px] bg-[linear-gradient(150deg,var(--color-navy-800),var(--color-ocean-600))] p-7 pt-8 text-white shadow-card">
+      <span className="pointer-events-none absolute -right-16 -bottom-16 -z-10 size-56 rounded-full border-[36px] border-white/[0.07]" />
+      <span className="grid size-14 place-items-center rounded-2xl bg-gold-300/20 text-gold-300">
+        <Icon name="message" size={26} />
+      </span>
+      <div className="flex flex-col gap-2">
+        <h3 className="font-display text-2xl font-semibold">Don’t See Your Issue?</h3>
+        <p className="leading-relaxed text-white/80">
+          Every pool is different. Tell us what’s going on — we’ll take a look and give you an honest answer and a
+          free estimate.
+        </p>
+      </div>
+      <div className="mt-auto flex flex-col gap-3">
+        <ButtonLink href={telHref} variant="primary" size="sm" arrow={false} full>
+          <Icon name="phone" size={18} />
+          Call {displayPhone()}
+        </ButtonLink>
+        <ButtonLink
+          href={whatsappHref}
+          variant="outline-light"
+          size="sm"
+          arrow={false}
+          full
+          className="hover:border-[#25D366] hover:bg-[#25D366]"
+        >
+          <FaWhatsapp size={19} aria-hidden="true" />
+          Message on WhatsApp
+        </ButtonLink>
+      </div>
     </article>
   )
 }
@@ -108,17 +147,23 @@ export function Services() {
         <SectionHeader
           eyebrow="Our Services"
           title="Everything Your Pool Needs, In One Place"
-          text="From routine cleaning to equipment repairs and seasonal care, we keep your pool clean, safe and running smoothly all year long."
+          text="From routine cleaning to leak detection, heater installs and seasonal care, we keep your pool clean, safe and running smoothly all year long."
         />
 
         <ServiceAccordion />
+        <div className="md:hidden">
+          <HelpCard />
+        </div>
 
-        <div className="hidden gap-6 md:grid md:grid-cols-2 lg:grid-cols-4">
+        <div className="hidden gap-6 md:grid md:grid-cols-2 lg:grid-cols-3">
           {services.map((service, i) => (
-            <Reveal key={service.title} delay={i * 90} className="h-full">
+            <Reveal key={service.title} delay={(i % 3) * 90} className="h-full">
               <ServiceCard service={service} />
             </Reveal>
           ))}
+          <Reveal delay={180} className="h-full">
+            <HelpCard />
+          </Reveal>
         </div>
 
         <HealthCheck />
