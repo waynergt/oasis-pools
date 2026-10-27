@@ -24,7 +24,7 @@ export function Footer() {
             </a>
             <p className="font-display text-2xl font-bold text-gold-300 italic">{business.tagline}.</p>
             <p className="text-white/70">
-              Professional pool cleaning, maintenance and repairs for homes across Colorado.
+              Professional pool cleaning, maintenance and repairs for homes across the Denver metro and the Front Range.
             </p>
             <SocialLinks />
           </div>
@@ -82,7 +82,7 @@ export function Footer() {
                   </a>
                 </li>
               )}
-              <li className="text-white/70">Serving all of Colorado</li>
+              <li className="text-white/70">Based in {business.baseCity}</li>
             </ul>
           </div>
         </div>

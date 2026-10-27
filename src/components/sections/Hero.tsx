@@ -76,7 +76,7 @@ export function Hero() {
             className="max-w-[620px] animate-pop-in text-base leading-relaxed text-white/90 md:text-[19px]"
             style={{ animationDelay: '160ms' }}
           >
-            Reliable pool cleaning, maintenance &amp; repairs for homes in Aurora, Denver and across Colorado — so
+            Reliable pool cleaning, maintenance &amp; repairs for homes in Aurora, Denver and the Front Range — so
             you can simply enjoy your pool.
           </p>
 

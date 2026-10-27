@@ -27,7 +27,9 @@ export const business = {
   /** WhatsApp number in international format without "+". Empty = use phone. */
   whatsapp: '17203318723',
   email: 'oasispools97@gmail.com',
-  serviceArea: 'Aurora, Denver & all of Colorado',
+  /** Where the business is based (no storefront: mobile service). */
+  baseCity: 'Aurora, CO',
+  serviceArea: 'Aurora, the Denver Metro & the Front Range',
   payments: ['Cash', 'Zelle', 'Bank Transfer', 'Check'],
 }
 
@@ -235,45 +237,72 @@ export const gallery: GalleryItem[] = [
   { src: equipmentPumpsImg, caption: 'Equipment Installs', alt: 'New pool pumps, filter and plumbing installed' },
 ]
 
-/** Cities shown on the Service Area map. x/y are computed from lat/lng in ServiceArea.tsx. */
+/**
+ * Cities on the Service Area map (from the coverage map the client sent).
+ * tier: 'base' = home base pin, 'major' = always labeled, 'minor' = label hidden on phones.
+ * label: which side of the dot the name goes on (pre-tuned so names don't overlap).
+ */
 export type MapCity = {
   name: string
   lat: number
   lng: number
-  base?: boolean
-  label?: 'left' | 'right' | 'top' | 'bottom'
-  /** Label hidden on phones to avoid crowding (the dot stays). */
-  minor?: boolean
+  tier: 'base' | 'major' | 'minor'
+  group: 'metro' | 'north' | 'south' | 'east'
+  label: 'left' | 'right' | 'top' | 'bottom'
 }
 
 export const mapCities: MapCity[] = [
-  { name: 'Denver', lat: 39.7392, lng: -104.9903, base: true, label: 'left' },
-  { name: 'Aurora', lat: 39.7294, lng: -104.8319, base: true, label: 'right' },
-  { name: 'Boulder', lat: 40.015, lng: -105.2705, label: 'left' },
-  { name: 'Fort Collins', lat: 40.5853, lng: -105.0844, label: 'left' },
-  { name: 'Greeley', lat: 40.4233, lng: -104.7091, label: 'right', minor: true },
-  { name: 'Castle Rock', lat: 39.3722, lng: -104.8561, label: 'right', minor: true },
-  { name: 'Colorado Springs', lat: 38.8339, lng: -104.8214, label: 'right' },
-  { name: 'Pueblo', lat: 38.2544, lng: -104.6091, label: 'right' },
-  { name: 'Vail', lat: 39.6403, lng: -106.3742, label: 'bottom' },
-  { name: 'Grand Junction', lat: 39.0639, lng: -108.5506, label: 'right' },
-  { name: 'Durango', lat: 37.2753, lng: -107.8801, label: 'top' },
+  { name: 'Aurora', lat: 39.7294, lng: -104.8319, tier: 'base', group: 'metro', label: 'right' },
+  { name: 'Denver', lat: 39.7392, lng: -104.9903, tier: 'major', group: 'metro', label: 'bottom' },
+  { name: 'Lakewood', lat: 39.7047, lng: -105.0814, tier: 'major', group: 'metro', label: 'left' },
+  { name: 'Arvada', lat: 39.8028, lng: -105.0875, tier: 'major', group: 'metro', label: 'right' },
+  { name: 'Westminster', lat: 39.8367, lng: -105.0372, tier: 'minor', group: 'metro', label: 'right' },
+  { name: 'Thornton', lat: 39.868, lng: -104.9719, tier: 'major', group: 'metro', label: 'right' },
+  { name: 'Commerce City', lat: 39.8083, lng: -104.9339, tier: 'minor', group: 'metro', label: 'right' },
+  { name: 'Broomfield', lat: 39.9205, lng: -105.0867, tier: 'minor', group: 'metro', label: 'right' },
+  { name: 'Littleton', lat: 39.6133, lng: -105.0166, tier: 'major', group: 'metro', label: 'right' },
+  { name: 'Centennial', lat: 39.5807, lng: -104.8772, tier: 'major', group: 'metro', label: 'right' },
+  { name: 'Highlands Ranch', lat: 39.5539, lng: -104.9694, tier: 'minor', group: 'metro', label: 'right' },
+  { name: 'Ken Caryl', lat: 39.5753, lng: -105.1125, tier: 'minor', group: 'metro', label: 'right' },
+  { name: 'Golden', lat: 39.7555, lng: -105.2211, tier: 'major', group: 'metro', label: 'right' },
+  { name: 'Morrison', lat: 39.6536, lng: -105.1911, tier: 'minor', group: 'metro', label: 'right' },
+  { name: 'Evergreen', lat: 39.6333, lng: -105.3172, tier: 'minor', group: 'metro', label: 'top' },
+  { name: 'Fort Collins', lat: 40.5853, lng: -105.0844, tier: 'major', group: 'north', label: 'right' },
+  { name: 'Wellington', lat: 40.7036, lng: -105.0086, tier: 'minor', group: 'north', label: 'right' },
+  { name: 'Windsor', lat: 40.4775, lng: -104.9014, tier: 'minor', group: 'north', label: 'right' },
+  { name: 'Loveland', lat: 40.3978, lng: -105.075, tier: 'major', group: 'north', label: 'right' },
+  { name: 'Greeley', lat: 40.4233, lng: -104.7091, tier: 'major', group: 'north', label: 'right' },
+  { name: 'Johnstown', lat: 40.3369, lng: -104.9122, tier: 'minor', group: 'north', label: 'right' },
+  { name: 'Berthoud', lat: 40.3083, lng: -105.0811, tier: 'minor', group: 'north', label: 'right' },
+  { name: 'Mead', lat: 40.2333, lng: -104.9986, tier: 'minor', group: 'north', label: 'right' },
+  { name: 'Platteville', lat: 40.215, lng: -104.8228, tier: 'minor', group: 'north', label: 'right' },
+  { name: 'Longmont', lat: 40.1672, lng: -105.1019, tier: 'major', group: 'north', label: 'right' },
+  { name: 'Lyons', lat: 40.2247, lng: -105.2714, tier: 'minor', group: 'north', label: 'right' },
+  { name: 'Frederick', lat: 40.0992, lng: -104.9372, tier: 'minor', group: 'north', label: 'left' },
+  { name: 'Fort Lupton', lat: 40.0847, lng: -104.813, tier: 'minor', group: 'north', label: 'top' },
+  { name: 'Erie', lat: 40.0503, lng: -105.05, tier: 'minor', group: 'north', label: 'right' },
+  { name: 'Gunbarrel', lat: 40.0633, lng: -105.1714, tier: 'minor', group: 'north', label: 'left' },
+  { name: 'Boulder', lat: 40.015, lng: -105.2705, tier: 'major', group: 'north', label: 'right' },
+  { name: 'Brighton', lat: 39.9853, lng: -104.8205, tier: 'major', group: 'north', label: 'left' },
+  { name: 'Lochbuie', lat: 40.0072, lng: -104.7161, tier: 'minor', group: 'north', label: 'right' },
+  { name: 'Hudson', lat: 40.0739, lng: -104.6433, tier: 'minor', group: 'north', label: 'right' },
+  { name: 'Parker', lat: 39.5186, lng: -104.7614, tier: 'major', group: 'south', label: 'right' },
+  { name: 'Castle Pines', lat: 39.4717, lng: -104.8961, tier: 'minor', group: 'south', label: 'right' },
+  { name: 'The Pinery', lat: 39.4553, lng: -104.7347, tier: 'minor', group: 'south', label: 'bottom' },
+  { name: 'Roxborough Park', lat: 39.4639, lng: -105.0853, tier: 'minor', group: 'south', label: 'left' },
+  { name: 'Sedalia', lat: 39.4372, lng: -104.9611, tier: 'minor', group: 'south', label: 'right' },
+  { name: 'Castle Rock', lat: 39.3722, lng: -104.8561, tier: 'major', group: 'south', label: 'left' },
+  { name: 'Franktown', lat: 39.3886, lng: -104.7514, tier: 'minor', group: 'south', label: 'right' },
+  { name: 'Bennett', lat: 39.7586, lng: -104.4275, tier: 'major', group: 'east', label: 'right' },
+  { name: 'Strasburg', lat: 39.7383, lng: -104.3233, tier: 'minor', group: 'east', label: 'bottom' },
 ]
 
-/** Areas listed next to the map (helps local search). */
-export const serviceAreas = [
-  'Aurora',
-  'Denver',
-  'Centennial',
-  'Parker',
-  'Littleton',
-  'Highlands Ranch',
-  'Lakewood',
-  'Arvada',
-  'Castle Rock',
-  'Boulder',
-  'Colorado Springs',
-  'Fort Collins',
+/** Headings for the city lists next to the map. */
+export const areaGroups: { id: MapCity['group']; title: string }[] = [
+  { id: 'metro', title: 'Denver Metro & Foothills' },
+  { id: 'north', title: 'Northern Colorado & Boulder County' },
+  { id: 'south', title: 'Douglas County' },
+  { id: 'east', title: 'East of Aurora' },
 ]
 
 export type BeforeAfterPair = { before: string; after: string; label: string }

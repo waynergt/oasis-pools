@@ -1,4 +1,4 @@
-import { business, services, social } from '../data/site'
+import { business, mapCities, services, social } from '../data/site'
 import { hasPhone } from '../lib/contact'
 
 /** LocalBusiness schema so Google understands the service area and offer. */
@@ -10,12 +10,9 @@ export function StructuredData() {
     name: business.legalName,
     slogan: business.tagline,
     description:
-      'Pool cleaning, maintenance, repairs, acid washing, deck sealing and hot tub service for homes in Aurora, Denver and across Colorado.',
-    areaServed: [
-      { '@type': 'City', name: 'Aurora, CO' },
-      { '@type': 'City', name: 'Denver, CO' },
-      { '@type': 'State', name: 'Colorado' },
-    ],
+      'Pool cleaning, maintenance, repairs, acid washing, deck sealing and hot tub service for homes in Aurora, the Denver metro and the Front Range of Colorado.',
+    address: { '@type': 'PostalAddress', addressLocality: 'Aurora', addressRegion: 'CO', addressCountry: 'US' },
+    areaServed: mapCities.map((c) => ({ '@type': 'City', name: `${c.name}, CO` })),
     paymentAccepted: business.payments.join(', '),
     ...(hasPhone ? { telephone: `+1${business.phone.replace(/\D/g, '').slice(-10)}` } : {}),
     ...(business.email ? { email: business.email } : {}),

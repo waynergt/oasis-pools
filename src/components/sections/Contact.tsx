@@ -61,7 +61,7 @@ export function Contact() {
             <span className="eyebrow text-gold-300">Contact Us</span>
             <h2 className="font-display text-[32px] leading-[1.15] font-bold md:text-[46px]">Need Pool Service?</h2>
             <p className="text-white/85 md:text-[19px]">
-              Call, text or WhatsApp us today for a free estimate. We come to you — anywhere in Colorado.
+              Call, text or WhatsApp us today for a free estimate. We come to you — across the Denver metro and the Front Range.
             </p>
 
             <a href={telHref} className="group w-fit">

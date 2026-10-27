@@ -33,7 +33,7 @@ Almost everything the client may ask to change lives in **`src/data/site.ts`**:
 - `plans` — plan names and what each includes (no prices on purpose: every plan is quoted for free).
 - `services`, `reasons`, `values`, `healthCheckItems` — page copy.
 - `gallery` — photos for **Our Work** (files in `src/assets/img/`). `wide: true` makes a photo span two columns.
-- `mapCities`, `serviceAreas` — pins on the Colorado map and the city chips next to it.
+- `mapCities`, `areaGroups` — cities on the Service Area map (Denver metro & Front Range, home base Aurora) and the grouped city lists next to it.
 - `images.heroVideo` — optional. The hero shows animated pool water drawn in the browser (WebGL, no file
   needed). To use a real video instead, put e.g. `hero-water.mp4` in `public/` and set
   `heroVideo: '/hero-water.mp4'`. If a browser can't run WebGL, the hero photo is shown instead.
@@ -76,7 +76,7 @@ src/
 - [x] Phone / WhatsApp number and email
 - [x] Instagram
 - [ ] Facebook page link
-- [ ] Quote form endpoint (`VITE_FORM_ENDPOINT` in Vercel → redeploy)
+- [x] Quote form endpoint (Formspree, `VITE_FORM_ENDPOINT` set in Vercel)
 - [ ] Real before & after photos
 - [ ] Confirm the Pool Health Check is free and the content of each plan
 - [ ] Domain / hosting (the `dist/` folder deploys as-is to Netlify, Vercel, Cloudflare Pages…)
