@@ -8,6 +8,9 @@ export function StructuredData() {
     '@type': 'HomeAndConstructionBusiness',
     additionalType: 'https://schema.org/HomeAndConstructionBusiness',
     name: business.legalName,
+    url: `${__SITE_URL__}/`,
+    image: `${__SITE_URL__}/og-image.jpg`,
+    logo: `${__SITE_URL__}/apple-touch-icon.png`,
     slogan: business.tagline,
     description:
       'Pool cleaning, maintenance, repairs, acid washing, deck sealing and hot tub service for homes in Aurora, the Denver metro and the Front Range of Colorado.',

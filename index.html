@@ -12,15 +12,28 @@
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <!-- Open Graph / social preview -->
+    <!-- Open Graph / social preview (WhatsApp, Facebook, iMessage…)
+         The site URL placeholder in these tags is filled in at build time from VITE_SITE_URL (vite.config.ts).
+         Bump ?v= whenever og-image.jpg changes so apps fetch the new image. -->
+    <link rel="canonical" href="__SITE_URL__/" />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Oasis Pools" />
+    <meta property="og:url" content="__SITE_URL__/" />
     <meta property="og:title" content="Oasis Pools — Excellence in Every Drop" />
     <meta
       property="og:description"
-      content="Professional pool care you can count on. Cleaning, maintenance and repairs in Aurora, Denver and the Front Range."
+      content="Professional pool care you can count on. Cleaning, maintenance and repairs in Aurora, Denver and the Front Range. Free estimates."
     />
-    <meta property="og:image" content="/og-image.jpg" />
+    <meta property="og:image" content="__SITE_URL__/og-image.jpg?v=2" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Oasis Pools — Professional pool care in Aurora, Denver and the Front Range. Call (720) 331-8723." />
+    <meta property="og:locale" content="en_US" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Oasis Pools — Excellence in Every Drop" />
+    <meta name="twitter:description" content="Pool cleaning, maintenance and repairs in Aurora, Denver and the Front Range. Free estimates." />
+    <meta name="twitter:image" content="__SITE_URL__/og-image.jpg?v=2" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

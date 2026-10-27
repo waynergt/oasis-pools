@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } fr
 import { quoteOptions } from '../../data/site'
 import { onPrefillQuote } from '../../lib/quoteEvents'
 import { submitQuote, type QuoteRequest } from '../../lib/submitQuote'
+import { track } from '../../lib/analytics'
 import { Icon } from '../Icon'
 import { Button } from '../ui/Button'
 import { Modal } from '../ui/Modal'
@@ -93,6 +94,7 @@ export function QuoteForm() {
     setStatus('sending')
     try {
       await submitQuote(values)
+      track('generate_lead', { service: values.service })
       setStatus('sent')
       setValues(empty)
     } catch {

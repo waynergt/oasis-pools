@@ -57,6 +57,9 @@
   html {
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
+    /* Color shown when the page "bounces" past the top/bottom (Safari, Mac trackpads, phones)
+       instead of white: matches the navy top bar and footer. */
+    background-color: var(--color-navy-900);
   }
   body {
     @apply bg-white font-sans text-ink antialiased;

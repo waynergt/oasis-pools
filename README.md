@@ -55,6 +55,20 @@ VITE_FORM_ENDPOINT=https://formspree.io/f/your-id
 
 Without it, requests are only logged in the browser console (useful for development).
 
+## SEO & analytics
+
+Environment variables (Vercel → Settings → Environment Variables, then **Redeploy**):
+
+| Variable             | What it does                                                                 |
+| -------------------- | ---------------------------------------------------------------------------- |
+| `VITE_FORM_ENDPOINT` | Formspree URL that receives the quote form                                   |
+| `VITE_SITE_URL`      | Public URL. Default `https://oasis-pools-six.vercel.app`. Set it to the custom domain when it's live |
+| `VITE_GA_ID`         | Google Analytics 4 ID (`G-…`). Empty = no analytics                           |
+
+`VITE_SITE_URL` feeds the canonical URL, share-image tags, structured data, and the generated
+`/sitemap.xml` and `/robots.txt` (see `vite.config.ts`). Analytics events are documented in
+`src/lib/analytics.ts` (`generate_lead`, `click_call`, `click_whatsapp`, …).
+
 ## Project structure
 
 ```
