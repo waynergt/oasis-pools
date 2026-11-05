@@ -62,7 +62,7 @@ Environment variables (Vercel → Settings → Environment Variables, then **Red
 | Variable             | What it does                                                                 |
 | -------------------- | ---------------------------------------------------------------------------- |
 | `VITE_FORM_ENDPOINT` | Formspree URL that receives the quote form                                   |
-| `VITE_SITE_URL`      | Public URL. Default `https://oasis-pools-six.vercel.app`. Set it to the custom domain when it's live |
+| `VITE_SITE_URL`      | Public URL. Default `https://www.oasispoolsdenver.com` (only set it to override) |
 | `VITE_GA_ID`         | Google Analytics 4 ID (`G-…`). Empty = no analytics                           |
 
 `VITE_SITE_URL` feeds the canonical URL, share-image tags, structured data, and the generated
@@ -93,4 +93,4 @@ src/
 - [x] Quote form endpoint (Formspree, `VITE_FORM_ENDPOINT` set in Vercel)
 - [ ] Real before & after photos
 - [ ] Confirm the Pool Health Check is free and the content of each plan
-- [ ] Domain / hosting (the `dist/` folder deploys as-is to Netlify, Vercel, Cloudflare Pages…)
+- [x] Domain: oasispoolsdenver.com (Cloudflare DNS → Vercel). `oasis-pools-six.vercel.app` redirects to it via `vercel.json`

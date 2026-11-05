@@ -7,7 +7,7 @@ import tailwindcss from '@tailwindcss/vite'
  * e.g. VITE_SITE_URL=https://oasispoolsco.com — canonical URL, share image, sitemap and robots.txt
  * all update automatically on the next deploy.
  */
-const DEFAULT_SITE_URL = 'https://oasis-pools-six.vercel.app'
+const DEFAULT_SITE_URL = 'https://www.oasispoolsdenver.com'
 
 /** Writes __SITE_URL__ into index.html and generates sitemap.xml + robots.txt at build time. */
 function seoFiles(siteUrl: string): Plugin {
