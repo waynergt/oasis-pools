@@ -8,6 +8,7 @@ import { Contact } from './components/sections/Contact'
 import { Hero } from './components/sections/Hero'
 import { OurWork } from './components/sections/OurWork'
 import { Plans } from './components/sections/Plans'
+import { Reviews } from './components/sections/Reviews'
 import { ServiceArea } from './components/sections/ServiceArea'
 import { Services } from './components/sections/Services'
 import { WhyChooseUs } from './components/sections/WhyChooseUs'
@@ -31,6 +32,7 @@ export default function App() {
         <Plans />
         <OurWork />
         <WhyChooseUs />
+        <Reviews />
         <About />
         <ServiceArea />
         <Contact />

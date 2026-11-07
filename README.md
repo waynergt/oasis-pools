@@ -69,9 +69,25 @@ Environment variables (Vercel → Settings → Environment Variables, then **Red
 `/sitemap.xml` and `/robots.txt` (see `vite.config.ts`). Analytics events are documented in
 `src/lib/analytics.ts` (`generate_lead`, `click_call`, `click_whatsapp`, …).
 
+## Google reviews
+
+The **Reviews** section (`src/components/sections/Reviews.tsx`) reads the Google Business Profile live through
+a Vercel Function (`api/reviews.ts`) that calls the Places API (New). The API key never reaches the browser.
+
+| Variable (Vercel only, no `VITE_` prefix) | What it is |
+| ----------------------------------------- | ---------- |
+| `GOOGLE_PLACES_API_KEY` | Google Cloud API key with **Places API (New)** enabled |
+| `GOOGLE_PLACE_ID`       | Place ID of the Oasis Pools profile (starts with `ChIJ`) |
+
+- No reviews on the profile yet → shows a "Leave a Google Review" call to action.
+- Reviews on the profile → Google rating, count and up to 5 reviews (Google's limit), linking to all reviews.
+- Variables not set, or `npm run dev` (which doesn't run `/api`) → the section is hidden.
+- Responses are cached 6 h on Vercel's CDN, so Google is only called a few times a day.
+
 ## Project structure
 
 ```
+api/reviews.ts            ← Vercel Function: Google reviews (Places API)
 src/
   data/site.ts            ← business info & all page copy
   lib/                    ← contact links, form submit, quote pre-fill events
@@ -80,7 +96,7 @@ src/
     layout/               ← TopBar, Navbar, MobileMenu, Footer, StickyCTA
     layout/WhatsAppButton ← floating WhatsApp bubble (tablet/desktop)
     sections/             ← Hero, Services (+HealthCheck), Plans, OurWork (+BeforeAfter),
-                            WhyChooseUs, About, ServiceArea (Colorado map), Contact (+QuoteForm)
+                            WhyChooseUs, Reviews, About, ServiceArea (Colorado map), Contact (+QuoteForm)
     ui/                   ← Button, Reveal (scroll animation), Modal, SectionHeader, CheckItem,
                             SocialLinks, PoolWater (animated hero water)
 ```

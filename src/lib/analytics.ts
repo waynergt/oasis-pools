@@ -10,6 +10,7 @@
  *  - click_whatsapp  tap on any WhatsApp link
  *  - click_email     tap on the email link
  *  - click_social    tap on Instagram / Facebook
+ *  - click_review    tap on "Leave / Write a Google review"
  */
 type Gtag = (...args: unknown[]) => void
 declare global {
@@ -61,7 +62,8 @@ export function initAnalytics() {
     (e) => {
       const a = (e.target as Element | null)?.closest?.('a[href]') as HTMLAnchorElement | null
       if (!a) return
-      const event = linkEvent(a.getAttribute('href') || '')
+      // data-track="event_name" on a link overrides the automatic mapping below
+      const event = a.dataset.track || linkEvent(a.getAttribute('href') || '')
       if (event) track(event, { link_text: a.textContent?.trim().slice(0, 60) || a.getAttribute('aria-label') || '' })
     },
     { capture: true },
