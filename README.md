@@ -63,7 +63,7 @@ Environment variables (Vercel → Settings → Environment Variables, then **Red
 | -------------------- | ---------------------------------------------------------------------------- |
 | `VITE_FORM_ENDPOINT` | Formspree URL that receives the quote form                                   |
 | `VITE_SITE_URL`      | Public URL. Default `https://www.oasispoolsdenver.com` (only set it to override) |
-| `VITE_GA_ID`         | Google Analytics 4 ID (`G-…`). Empty = no analytics                           |
+| `VITE_GA_ID`         | Optional. Overrides the GA4 ID (default `G-RXH9QL4T1L`, only tracks on the live domain) |
 
 `VITE_SITE_URL` feeds the canonical URL, share-image tags, structured data, and the generated
 `/sitemap.xml` and `/robots.txt` (see `vite.config.ts`). Analytics events are documented in

@@ -1,5 +1,7 @@
 /**
- * Google Analytics 4 (only loads when VITE_GA_ID is set, e.g. in Vercel → Environment Variables).
+ * Google Analytics 4. Property "Oasis Pools Website" (measurement ID below).
+ * Only loads on the live domain (see __SITE_URL__), so localhost and Vercel previews don't count as visits.
+ * VITE_GA_ID overrides the ID and also enables tracking on any host (useful for testing).
  *
  * Events sent (visible in GA4 → Reports → Engagement → Events; mark the first ones as "key events"):
  *  - generate_lead   quote form sent successfully (param: service)
@@ -17,7 +19,10 @@ declare global {
   }
 }
 
-const GA_ID = import.meta.env.VITE_GA_ID?.trim()
+const DEFAULT_GA_ID = 'G-RXH9QL4T1L'
+const GA_OVERRIDE = import.meta.env.VITE_GA_ID?.trim()
+const GA_ID = GA_OVERRIDE || DEFAULT_GA_ID
+const SITE_HOST = new URL(__SITE_URL__).hostname
 
 export function track(event: string, params: Record<string, unknown> = {}) {
   window.gtag?.('event', event, params)
@@ -34,6 +39,7 @@ function linkEvent(href: string): string | null {
 
 export function initAnalytics() {
   if (!GA_ID || typeof window === 'undefined' || window.gtag) return
+  if (!GA_OVERRIDE && window.location.hostname !== SITE_HOST) return
 
   const script = document.createElement('script')
   script.async = true
