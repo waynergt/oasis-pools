@@ -88,7 +88,8 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col justify-between gap-2 border-t border-white/12 pt-6 text-sm text-white/60 md:flex-row">
-          <p>
+          {/* The year is baked into the prerendered HTML; let the browser update it without a hydration warning */}
+          <p suppressHydrationWarning>
             © {new Date().getFullYear()} {business.legalName}. All rights reserved.
           </p>
           <p>{business.payments.join(' · ')}</p>

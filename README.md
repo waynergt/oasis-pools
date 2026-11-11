@@ -18,7 +18,7 @@ Other scripts:
 
 | Command             | What it does                                  |
 | ------------------- | --------------------------------------------- |
-| `npm run build`     | Type-checks and builds the site into `dist/`  |
+| `npm run build`     | Type-checks, builds and prerenders the site into `dist/` |
 | `npm run preview`   | Serves the production build locally           |
 | `npm run typecheck` | Type-check only                               |
 
@@ -69,6 +69,14 @@ Environment variables (Vercel → Settings → Environment Variables, then **Red
 `/sitemap.xml` and `/robots.txt` (see `vite.config.ts`). Analytics events are documented in
 `src/lib/analytics.ts` (`generate_lead`, `click_call`, `click_whatsapp`, …).
 
+## Prerendered HTML (SEO)
+
+`npm run build` also renders the page to static HTML (`src/entry-server.tsx` + `scripts/prerender.mjs`) and writes
+it into `dist/index.html`. Search engines, AI assistants and link previews get the full content without running
+JavaScript; in the browser React attaches to that HTML (`hydrateRoot` in `src/main.tsx`). `npm run dev` is unchanged.
+
+Anything that touches `window`/`document` must stay inside `useEffect` (or event handlers) so the build-time render works.
+
 ## Google reviews
 
 The **Reviews** section (`src/components/sections/Reviews.tsx`) reads the Google Business Profile live through
@@ -88,7 +96,9 @@ a Vercel Function (`api/reviews.ts`) that calls the Places API (New). The API ke
 
 ```
 api/reviews.ts            ← Vercel Function: Google reviews (Places API)
+scripts/prerender.mjs     ← build step: writes the rendered page into dist/index.html
 src/
+  main.tsx / entry-server.tsx ← browser entry (hydrate) / build-time render
   data/site.ts            ← business info & all page copy
   lib/                    ← contact links, form submit, quote pre-fill events
   hooks/                  ← active section, scroll state, body scroll lock
